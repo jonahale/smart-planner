@@ -1,11 +1,9 @@
 package com.jonah.planner.dto;
 
+import com.jonah.planner.domain.Role;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -16,11 +14,8 @@ public class UserCreationDTO {
 
     @NotEmpty(message = "Password cannot be empty.")
     private String password;
-    private List<String> roles;
 
-    public List<String> getRoles() {
-        return roles;
-    }
+    private Role role;
 
     public String getName() {
         return name;

@@ -35,7 +35,7 @@ public class UserController {
         return userrepository.findById(id)
                 .map(user -> {
                     user.setName(newUser.getName());
-                    user.setRoles(newUser.getRoles());
+                    user.setRole(newUser.getRole());
                     return userrepository.save(user);
                 })
                 .orElseGet(() -> {

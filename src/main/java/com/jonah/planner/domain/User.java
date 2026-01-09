@@ -1,7 +1,6 @@
 package com.jonah.planner.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +8,12 @@ import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity
 public class User {
     @Getter
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Getter
@@ -23,11 +23,8 @@ public class User {
     @Setter
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private String email;
-
-    @Getter
-    @Setter
-    private List<Role> roles;
+    private Role role;
 }
