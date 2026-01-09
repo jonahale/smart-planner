@@ -13,10 +13,12 @@ public interface UserMapper {
     UserCreationDTO toDto(User user);
     List<UserCreationDTO> toDTOList(List<User> users);
 
+    // Converts Role enum to its String representation (ADMIN -> "ADMIN")
     default String map(Role role) {
         return role.name();
     }
 
+    // Converts String value to Role enum ("ADMIN -> Role.ADMIN)
     default Role map(String role) {
         return Role.valueOf(role);
     }

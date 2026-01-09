@@ -1,51 +1,46 @@
 package com.jonah.planner.controller;
 
 import com.jonah.planner.domain.User;
-import com.jonah.planner.exception.UserNotFoundException;
-import com.jonah.planner.repository.UserRepository;
+import com.jonah.planner.service.UserService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserController {
-    private final UserRepository userrepository;
 
-    UserController(UserRepository userRepository) {
-        this.userrepository = userRepository;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping("/users")
-    List<User> all() {
-        return userrepository.findAll();
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getUsers();
     }
 
-    @PostMapping("/users")
-    User newUser(@RequestBody User newUser) {
-        return userrepository.save(newUser);
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
-    @GetMapping("/users/{id}")
-    User one(@PathVariable Long id) {
-        return userrepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserByID(id);
     }
 
-    @PutMapping("/users/{id}")
-    User updateUser(@RequestBody User newUser, @PathVariable Long id) {
-        return userrepository.findById(id)
-                .map(user -> {
-                    user.setName(newUser.getName());
-                    user.setRole(newUser.getRole());
-                    return userrepository.save(user);
-                })
-                .orElseGet(() -> {
-                    return userrepository.save(newUser);
-                });
+    @PutMapping("/{id}")
+    public User updateUser(
+            @PathVariable Long id,
+            @RequestBody User user
+    ) {
+        return userService.updateUser(id, user);
     }
 
-    @DeleteMapping("/users/{id}")
-    void deleteUser(@PathVariable Long id) {
-        userrepository.deleteById(id);
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
-
 }

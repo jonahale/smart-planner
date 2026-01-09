@@ -1,53 +1,46 @@
 package com.jonah.planner.controller;
 
 import com.jonah.planner.domain.Note;
-
-import com.jonah.planner.exception.UserNotFoundException;
-import com.jonah.planner.repository.NoteRepository;
+import com.jonah.planner.service.NoteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/notes")
 public class NoteController {
-    private final NoteRepository noterepository;
 
-    NoteController(NoteRepository noteRepository) {
-        this.noterepository = noteRepository;
+    private final NoteService noteService;
+
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
     }
 
-    @GetMapping("/notes")
-    List<Note> all() {
-        return noterepository.findAll();
+    @GetMapping
+    public List<Note> getAllNotes() {
+        return noteService.getAllNotes();
     }
 
-    @PostMapping("/notes")
-    Note newNote(@RequestBody Note newNote) {
-        return noterepository.save(newNote);
+    @PostMapping
+    public Note createNote(@RequestBody Note note) {
+        return noteService.createNote(note);
     }
 
-    @GetMapping("/notes/{id}")
-    Note one(@PathVariable Long id) {
-        return noterepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id));
+    @GetMapping("/{id}")
+    public Note getNoteById(@PathVariable Long id) {
+        return noteService.getNoteById(id);
     }
 
-    @PutMapping("/notes/{id}")
-    Note updateNote(@RequestBody Note newNote, @PathVariable Long id) {
-        return noterepository.findById(id)
-                .map(note -> {
-                    note.setTitle(newNote.getTitle());
-                    return noterepository.save(note);
-                })
-                .orElseGet(() -> {
-                    return noterepository.save(newNote);
-                });
+    @PutMapping("/{id}")
+    public Note updateNote(
+            @PathVariable Long id,
+            @RequestBody Note note
+    ) {
+        return noteService.updateNote(id, note);
     }
 
-    @DeleteMapping("/notes/{id}")
-    void deleteUser(@PathVariable Long id) {
-        noterepository.deleteById(id);
+    @DeleteMapping("/{id}")
+    public void deleteNote(@PathVariable Long id) {
+        noteService.deleteNote(id);
     }
-
 }
-
