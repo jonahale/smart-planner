@@ -30,6 +30,21 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(id)); // If user doesn't exist throw an error
     }
 
+    public List<User> searchUsersByName(String name) {
+        String searched;
+
+        if (name == null) {
+            searched = "";
+        } else {
+            searched = name.trim();
+        }
+
+        if (searched.isEmpty()) {
+            return List.of(); // return nothing
+        }
+        return userRepository.findByNameContainingIgnoreCase(searched); // Search for users whose names contain the provided text (case-insensitive)
+    }
+
     public User updateUser(Long id, User updatedUser) {
         User existingUser = getUserByID(id);
         existingUser.setName(updatedUser.getName());
