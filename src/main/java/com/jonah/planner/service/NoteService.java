@@ -52,7 +52,7 @@ public class NoteService {
         return noteRepository.save(existingNote);
     }
 
-    public void deleteUser(Long id) {
+    public void deleteNote(Long id) {
         getNoteByID(id);
         noteRepository.deleteById(id);
     }

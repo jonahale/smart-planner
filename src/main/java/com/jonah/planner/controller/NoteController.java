@@ -18,7 +18,7 @@ public class NoteController {
 
     @GetMapping
     public List<Note> getAllNotes() {
-        return noteService.getAllNotes();
+        return noteService.getNotes();
     }
 
     @PostMapping
@@ -27,8 +27,8 @@ public class NoteController {
     }
 
     @GetMapping("/{id}")
-    public Note getNoteById(@PathVariable Long id) {
-        return noteService.getNoteById(id);
+    public Note getNote(@PathVariable Long id) {
+        return noteService.getNoteByID(id);
     }
 
     @PutMapping("/{id}")
