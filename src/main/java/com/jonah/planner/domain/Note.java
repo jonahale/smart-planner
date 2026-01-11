@@ -20,9 +20,9 @@ public class Note {
 
     @Getter
     @Setter
-    String title;
+    private String title;
 
     @Getter
     @Setter
-    String content;
+    private String content;
 }
