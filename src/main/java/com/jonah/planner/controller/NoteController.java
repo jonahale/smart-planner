@@ -1,6 +1,7 @@
 package com.jonah.planner.controller;
 
-import com.jonah.planner.domain.Note;
+import com.jonah.planner.dto.NoteRequestDTO;
+import com.jonah.planner.dto.NoteResponseDTO;
 import com.jonah.planner.service.NoteService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,24 +18,30 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getAllNotes() {
+    public List<NoteResponseDTO> getAllNotes() {
         return noteService.getNotes();
     }
 
+    @GetMapping("/search")
+    public List<NoteResponseDTO> searchNotes(@RequestParam(required = false) String title) {
+        return noteService.searchNoteByTitle(title);
+    }
+
+
     @PostMapping
-    public Note createNote(@RequestBody Note note) {
+    public NoteResponseDTO createNote(@RequestBody NoteRequestDTO note) {
         return noteService.createNote(note);
     }
 
     @GetMapping("/{id}")
-    public Note getNote(@PathVariable Long id) {
+    public NoteResponseDTO getNote(@PathVariable Long id) {
         return noteService.getNoteByID(id);
     }
 
     @PutMapping("/{id}")
-    public Note updateNote(
+    public NoteResponseDTO updateNote(
             @PathVariable Long id,
-            @RequestBody Note note
+            @RequestBody NoteRequestDTO note
     ) {
         return noteService.updateNote(id, note);
     }

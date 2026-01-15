@@ -6,7 +6,4 @@ public class NoteNotFoundException extends RuntimeException {
         super("Could not find note " + id);
     }
 
-    public NoteNotFoundException(String title) {
-        super("Could not find title " + title);
-    }
 }

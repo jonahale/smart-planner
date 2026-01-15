@@ -2,6 +2,7 @@ package com.jonah.planner;
 import com.jonah.planner.domain.Role;
 import com.jonah.planner.domain.User;
 import com.jonah.planner.dto.UserCreationDTO;
+import com.jonah.planner.dto.UserResponseDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -10,8 +11,9 @@ import java.util.List;
 public interface UserMapper {
     User toEntity(UserCreationDTO userCreationDTO);
 
-    UserCreationDTO toDto(User user);
-    List<UserCreationDTO> toDTOList(List<User> users);
+    UserCreationDTO toResponseDto(User user);
+
+    List<UserResponseDTO> toResponseDtoList(List<User> users);
 
     // Converts Role enum to its String representation (ADMIN -> "ADMIN")
     default String map(Role role) {

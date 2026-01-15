@@ -1,7 +1,8 @@
 package com.jonah.planner;
 
 import com.jonah.planner.domain.Note;
-import com.jonah.planner.dto.NoteDTO;
+import com.jonah.planner.dto.NoteRequestDTO;
+import com.jonah.planner.dto.NoteResponseDTO;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -9,8 +10,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface NoteMapper {
-    Note toEntity(NoteDTO noteDTO);
+    Note toEntity(NoteRequestDTO noteRequestDTO);
 
-    NoteDTO toDto(Note note);
-    List<NoteDTO> toDTOList(List<Note> notes);
+    NoteResponseDTO toResponseDto(Note note);
+
+    List<NoteResponseDTO> toResponseDtoList(List<Note> notes);
 }
